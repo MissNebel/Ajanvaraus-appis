@@ -1,0 +1,9 @@
+.menuitems {
+    background-color: #FFC107;
+}
+
+.menuitem {
+    color: #ffffff;
+    border-bottom: #ffffff 1px solid;
+    padding: 1em;
+}

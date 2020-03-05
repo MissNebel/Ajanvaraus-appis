@@ -1,0 +1,121 @@
+<div class="title">
+  <h1>AJANVARAUS</h1>
+</div>
+
+<form [formGroup]="appointmentForm" class="myform" (ngSubmit)="onSubmit()" (window:resize)="onResize($event)">
+
+  <div class="infoForm">
+    <mat-grid-list cols="{{cols}}">
+      <mat-grid-tile style="height: 100%;">
+        <div class="formitem">
+          <h3>VALITSE PALVELU</h3>
+          <mat-form-field>
+            <input formControlName="date" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+              placeholder="Valitse päivä" #pickerInput [ngClass]="{ 'is-invalid': submitted && f.date.errors }">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+            <div *ngIf="f.date.errors.required">Päivämäärä vaaditaan</div>
+          </div>
+        </div>
+        <div class="formitem">
+          <mat-form-field>
+            <mat-label>Valitse työ</mat-label>
+            <mat-select formControlName="work">
+              <mat-option *ngFor="let item of works" [value]="item.value"
+                [ngClass]="{ 'is-invalid': submitted && f.work.errors }">
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="submitted && f.work.errors" class="invalid-feedback">
+            <div *ngIf="f.work.errors.required">Valinta vaaditaan</div>
+          </div>
+        </div>
+
+        <div class="formitem">
+          <mat-form-field>
+            <mat-label>Valitse tekijä</mat-label>
+            <mat-select formControlName="worker">
+              <mat-option *ngFor="let item of workers" [value]="item.value"
+                [ngClass]="{ 'is-invalid': submitted && f.worker.errors }">
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="submitted && f.worker.errors" class="invalid-feedback">
+            <div *ngIf="f.worker.errors.required">Valinta vaaditaan</div>
+          </div>
+        </div>
+
+        <div class="formitem">
+          <mat-form-field>
+            <mat-label>Valitse aika</mat-label>
+            <mat-select formControlName="time">
+              <mat-option *ngFor="let item of time" [value]="item.value" [disabled]="!item.isAvailable"
+                [ngClass]="{ 'is-invalid': submitted && f.time.errors }">
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div *ngIf="submitted && f.time.errors" class="invalid-feedback">
+            <div *ngIf="f.time.errors.required">Valinta vaaditaan</div>
+          </div>
+        </div>
+
+
+      </mat-grid-tile>
+
+      <mat-grid-tile style="height: 100%;">
+        <div class="formitem">
+          <h3>YHTEYSTIEDOT</h3>
+          <mat-form-field>
+            <mat-label>Nimi</mat-label>
+            <input matInput formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+          </mat-form-field>
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Nimi vaaditaan</div>
+          </div>
+        </div>
+
+        <div class="formitem">
+          <mat-form-field>
+            <mat-label>Sähköposti</mat-label>
+            <input matInput formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          </mat-form-field>
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Sähköposti vaaditaan</div>
+            <div *ngIf="f.email.errors.email">Sähköpostin tulee olla oikea</div>
+          </div>
+        </div>
+
+        <div class="formitem">
+          <mat-form-field>
+            <mat-label>Puhelinnumero</mat-label>
+            <span matPrefix>+358 &nbsp;</span>
+            <input type="tel" matInput formControlName="phone"
+              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+          </mat-form-field>
+          <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+            <div *ngIf="f.phone.errors.required">Puhelinnumero vaaditaan</div>
+          </div>
+        </div>
+
+        <div class="formitem">
+          <mat-form-field>
+            <mat-label>Lisätiedot</mat-label>
+            <textarea matInput formControlName="information"></textarea>
+          </mat-form-field>
+        </div>
+
+
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div class="formitem buttonform">
+    <button mat-raised-button color="primary" class="submitbutton" type="submit" (click)="onSubmit()">LÄHETÄ</button>
+  </div>
+
+</form>
